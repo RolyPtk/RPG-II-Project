@@ -1,7 +1,9 @@
 using UnityEngine;
 using Pathfinding;
 
-public class EnemyAI : MonoBehaviour
+// Original EnemyAI which always follows the player no matter what
+// currently out of use
+public class EnemyPathFinding : MonoBehaviour
 {
     public Transform target;
 
@@ -17,22 +19,19 @@ public class EnemyAI : MonoBehaviour
     Seeker seeker;
     Rigidbody2D rb;
 
-    void Start()
-    {
+    void Start(){
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 
         InvokeRepeating("UpdatePath", 0.0f, 0.5f); //called every half a second
     }
 
-    void UpdatePath()
-    {
+    void UpdatePath(){
         if(seeker.IsDone())
             seeker.StartPath(rb.position, target.position, OnPathComplete);
     }
 
-    void OnPathComplete(Path p)   
-    {   
+    void OnPathComplete(Path p){   
         if(!p.error){
             path = p;
             currentwaypoint = 0;
@@ -40,19 +39,17 @@ public class EnemyAI : MonoBehaviour
     }
 
     // It's only called a fixed number of times so work with this when doing physics as well 
-    void FixedUpdate()
-    {
+    void FixedUpdate(){
         if(path == null)
             return;
 
-        if(currentwaypoint >= path.vectorPath.Count)
-        {
+        if(currentwaypoint >= path.vectorPath.Count){
             reachedEndOfPath = true;
             return;
         }   
         else reachedEndOfPath = false;
 
-        Vector2 direction = ((Vector2)path.vectorPath[currentwaypoint] - rb.position).normalized; // always work with normalised vectors
+        Vector2 direction =  ((Vector2)path.vectorPath[currentwaypoint] - rb.position).normalized; // always work with normalised vectors
         Vector2 force = direction * speed * Time.deltaTime; // a seperate vector for force, always use deltaTime so it's not frame dependent (1000 fps would make the enemy 10 times faster than 100 fps so)
 
         // don't forget to add air resistance in the editor by adding linear drag (wind resistance) tp like 1.5 maybe

@@ -12,16 +12,15 @@ public class Enemy : Entity
     private Transform player;
     private AIPath aiPath;
 
-    protected override void Start()
-    {
+    protected override void Start(){
         base.Start();
         player = GameObject.FindWithTag("Player").transform;
         aiPath = GetComponent<AIPath>();
 
         if (player == null)
         Debug.LogError("Enemy cannot find Player! Is the tag set correctly?");
-    if (aiPath == null)
-        Debug.LogError("Enemy has no AIPath component!");
+        if (aiPath == null)
+            Debug.LogError("Enemy has no AIPath component!");
     }
 
     void Update()
