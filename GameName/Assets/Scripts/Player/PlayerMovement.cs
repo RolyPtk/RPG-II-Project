@@ -6,10 +6,12 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5f;
     private Rigidbody2D rb;
     private Vector2 movement;
-
+    private Animator animator;
+    Vector2 lastMove;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     void OnDrawGizmos()
@@ -25,6 +27,15 @@ public class PlayerMovement : MonoBehaviour
         // movement
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
+
+        if (movement != Vector2.zero)
+        {
+            lastMove = movement;
+            animator.SetFloat("MoveX", movement.x);
+            animator.SetFloat("MoveY", movement.y);
+        }
+
+        animator.SetFloat("Speed", movement.magnitude);
 
         // mouse world position
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
