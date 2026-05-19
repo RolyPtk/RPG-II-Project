@@ -11,11 +11,13 @@ public class Enemy : Entity
     private float lastAttackTime;
     private Transform player;
     private AIPath aiPath;
+    private EnemyAnimation enemyAnimation; // added by Ionut
 
     protected override void Start(){
         base.Start();
         player = GameObject.FindWithTag("Player").transform;
         aiPath = GetComponent<AIPath>();
+        enemyAnimation = GetComponentInChildren<EnemyAnimation>(); // added by Ionut
 
         if (player == null)
         Debug.LogError("Enemy cannot find Player! Is the tag set correctly?");
@@ -36,6 +38,7 @@ public class Enemy : Entity
                 lastAttackTime = Time.time;
                 var entityComponent = player.GetComponent<Entity>();
                 Debug.Log("Entity component found: " + (entityComponent != null));
+                enemyAnimation.Attack(); // added by Ionut
                 player.GetComponent<Entity>()?.TakeDamage(attackDamage);
                 Debug.Log("Enemy attacked player for " + attackDamage + " damage");
             }
@@ -48,6 +51,7 @@ public class Enemy : Entity
 
     protected override void Die()
     {
+        enemyAnimation.Die(); // added by Ionut
         Destroy(gameObject);
     }
 
