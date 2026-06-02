@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Player : Entity
 {
     public string playerName;
@@ -7,6 +9,32 @@ public class Player : Entity
 
     protected override void Start(){
         base.Start();
+
+        if (PlayerPrefs.HasKey("SavedScene"))
+        {
+            PlayerData playerData =
+                DatabaseManager.Instance.LoadPlayer();
+
+            GameStateData gameState =
+                DatabaseManager.Instance.LoadGameState();
+
+            if (playerData != null)
+            {
+                LoadData(playerData);
+            }
+
+            if (gameState != null)
+            {
+                transform.position =
+                    new Vector3(
+                        gameState.PlayerPosX,
+                        gameState.PlayerPosY,
+                        0f
+                    );
+            }
+
+            PlayerPrefs.DeleteKey("SavedScene");
+        }
     }
 
     protected override void Die(){
@@ -24,5 +52,18 @@ public class Player : Entity
             Gold = gold,
             CurrentLevel = currentLevel
         };
+    }
+
+    public void LoadData(PlayerData data)
+    {
+        playerName = data.Name;
+
+        SetCurrentHealth(data.Health);
+
+        experience = data.Experience;
+
+        gold = data.Gold;
+
+        currentLevel = data.CurrentLevel;
     }
 }

@@ -16,6 +16,24 @@ public class MainMenuManager : MonoBehaviour
         //string scenaSalvata = PlayerPrefs.GetString("UltimulNivelSalvat", primaScena);
 
         //SceneManager.LoadScene(scenaSalvata);
+
+        GameStateData gameState =
+        DatabaseManager.Instance.LoadGameState();
+
+        if (gameState == null)
+        {
+            Debug.Log("Nu exista salvare!");
+            return;
+        }
+
+        PlayerPrefs.SetString(
+            "SavedScene",
+            gameState.SceneName
+        );
+
+        SceneManager.LoadScene(
+            gameState.SceneName
+        );
     }
 
     public void ApasaLoadGame()

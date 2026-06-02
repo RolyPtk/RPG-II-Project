@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -49,6 +50,7 @@ public class PauseMenu : MonoBehaviour
 
         GameStateData gameState = new GameStateData();
 
+        gameState.SceneName = SceneManager.GetActiveScene().name;
         gameState.PlayerPosX = player.transform.position.x;
         gameState.PlayerPosY = player.transform.position.y;
 

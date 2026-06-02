@@ -53,6 +53,7 @@ public class DatabaseManager : MonoBehaviour
                 @"CREATE TABLE IF NOT EXISTS GameState
                 (
                     Id INTEGER PRIMARY KEY,
+                    SceneName TEXT,
                     PlayerPosX REAL,
                     PlayerPosY REAL
                 );";
@@ -116,19 +117,22 @@ public class DatabaseManager : MonoBehaviour
             using (IDbCommand cmd = dbConnection.CreateCommand())
             {
                 cmd.CommandText =
-                @"INSERT OR REPLACE INTO GameState
+                 @"INSERT OR REPLACE INTO GameState
                 (
                     Id,
+                    SceneName,
                     PlayerPosX,
                     PlayerPosY
                 )
                 VALUES
                 (
                     1,
+                    @SceneName,
                     @PlayerPosX,
                     @PlayerPosY
                 );";
 
+                AddParameter(cmd, "@SceneName", gameState.SceneName);
                 AddParameter(cmd, "@PlayerPosX", gameState.PlayerPosX);
                 AddParameter(cmd, "@PlayerPosY", gameState.PlayerPosY);
 
@@ -149,5 +153,73 @@ public class DatabaseManager : MonoBehaviour
         param.Value = value;
 
         cmd.Parameters.Add(param);
+    }
+
+    public PlayerData LoadPlayer()
+    {
+        PlayerData player = null;
+
+        using (IDbConnection dbConnection = new SqliteConnection(dbPath))
+        {
+            dbConnection.Open();
+
+            using (IDbCommand cmd = dbConnection.CreateCommand())
+            {
+                cmd.CommandText = "SELECT * FROM Player WHERE Id = 1";
+
+                IDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    player = new PlayerData
+                    {
+                        Name = reader["Name"].ToString(),
+                        Health = int.Parse(reader["Health"].ToString()),
+                        Experience = int.Parse(reader["Experience"].ToString()),
+                        Gold = int.Parse(reader["Gold"].ToString()),
+                        CurrentLevel = int.Parse(reader["CurrentLevel"].ToString())
+                    };
+                }
+
+                reader.Close();
+            }
+
+            dbConnection.Close();
+        }
+
+        return player;
+    }
+
+    public GameStateData LoadGameState()
+    {
+        GameStateData gameState = null;
+
+        using (IDbConnection dbConnection = new SqliteConnection(dbPath))
+        {
+            dbConnection.Open();
+
+            using (IDbCommand cmd = dbConnection.CreateCommand())
+            {
+                cmd.CommandText = "SELECT * FROM GameState WHERE Id = 1";
+
+                IDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    gameState = new GameStateData
+                    {
+                        SceneName = reader["SceneName"].ToString(),
+                        PlayerPosX = float.Parse(reader["PlayerPosX"].ToString()),
+                        PlayerPosY = float.Parse(reader["PlayerPosY"].ToString())
+                    };
+                }
+
+                reader.Close();
+            }
+
+            dbConnection.Close();
+        }
+
+        return gameState;
     }
 }
