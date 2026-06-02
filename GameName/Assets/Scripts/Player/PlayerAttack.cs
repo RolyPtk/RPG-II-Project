@@ -15,6 +15,9 @@ public class PlayerAttack : MonoBehaviour
 
     public void Update()
     {
+        if (Time.timeScale == 0f)
+            return;
+
         if (Input.GetMouseButtonDown(0))
             Attack();
         DrawAttackCone();
