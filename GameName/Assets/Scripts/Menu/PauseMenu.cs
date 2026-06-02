@@ -16,6 +16,8 @@ public class PauseMenu : MonoBehaviour
             menuUI.SetActive(isOpen);
 
             Time.timeScale = isOpen ? 0f : 1f;
+
+            Debug.Log(Time.timeScale);
         }
     }
 
@@ -34,5 +36,24 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void SaveGame()
+    {
+
+        Player player = FindFirstObjectByType<Player>();
+
+        DatabaseManager.Instance.SavePlayer(
+            player.ToData()
+        );
+
+        GameStateData gameState = new GameStateData();
+
+        gameState.PlayerPosX = player.transform.position.x;
+        gameState.PlayerPosY = player.transform.position.y;
+
+        DatabaseManager.Instance.SaveGameState(gameState);
+
+        Debug.Log("Game Saved!");
     }
 }

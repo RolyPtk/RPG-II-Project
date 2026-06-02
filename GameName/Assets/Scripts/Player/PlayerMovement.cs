@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
+        if (Time.timeScale == 0f)
+            return;
         // movement
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
