@@ -51,7 +51,7 @@ public class EnemyAI : MonoBehaviour{
         // human like visibility a.k.a. cone 120 degrees
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        if(distanceToPlayer > visionAngle)
+        if(distanceToPlayer > detectionRadius)
             return false;
 
         Vector2 directionToPlayer = (player.position - transform.position).normalized;
