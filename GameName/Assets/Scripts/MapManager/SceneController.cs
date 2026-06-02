@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 public class SceneController : MonoBehaviour
 {
     public static SceneController Instance;
+    [SerializeField] Animator transitionAnim;
     public Image fadeImage;
     public float fadeDuration = 1f;
 
@@ -24,55 +26,29 @@ public class SceneController : MonoBehaviour
 
     public void NextLevel()
     {
-        int next = SceneManager.GetActiveScene().buildIndex + 1;
-        if (next < SceneManager.sceneCountInBuildSettings)
-            StartCoroutine(TransitionToScene(next));
-        else
-            Debug.Log("Ai terminat jocul!");
+        StartCoroutine(LoadLevel());
+    }
+
+    private IEnumerator LoadLevel()
+    {
+        transitionAnim.SetTrigger("End");
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //PlayerPrefs.SetString("UltimulNivelSalvat", SceneManager.GetActiveScene().name);
+        transitionAnim.SetTrigger("Start");
     }
 
     public void LoadScene(string sceneName)
     {
-        StartCoroutine(TransitionToSceneByName(sceneName));
+        StartCoroutine(LoadSceneCoroutine(sceneName));
     }
 
-    private IEnumerator TransitionToScene(int sceneIndex)
+    private IEnumerator LoadSceneCoroutine(string sceneName)
     {
-        yield return StartCoroutine(Fade(0f, 1f));
-        AsyncOperation load = SceneManager.LoadSceneAsync(sceneIndex);
-        load.allowSceneActivation = false;
-        while (load.progress < 0.9f)
-            yield return null;
-        load.allowSceneActivation = true;
-        yield return new WaitForEndOfFrame();
-        yield return StartCoroutine(Fade(1f, 0f));
-    }
-
-    private IEnumerator TransitionToSceneByName(string sceneName)
-    {
-        yield return StartCoroutine(Fade(0f, 1f));
-        AsyncOperation load = SceneManager.LoadSceneAsync(sceneName);
-        load.allowSceneActivation = false;
-        while (load.progress < 0.9f)
-            yield return null;
-        load.allowSceneActivation = true;
-        yield return new WaitForEndOfFrame();
-        yield return StartCoroutine(Fade(1f, 0f));
-    }
-
-    private IEnumerator Fade(float from, float to)
-    {
-        if (fadeImage == null) yield break;
-        float elapsed = 0f;
-        Color c = fadeImage.color;
-        while (elapsed < fadeDuration)
-        {
-            elapsed += Time.deltaTime;
-            c.a = Mathf.Lerp(from, to, elapsed / fadeDuration);
-            fadeImage.color = c;
-            yield return null;
-        }
-        c.a = to;
-        fadeImage.color = c;
+        transitionAnim.SetTrigger("End");
+        yield return new WaitForSeconds(1f);
+        //PlayerPrefs.SetString("UltimulNivelSalvat", sceneName);
+        SceneManager.LoadScene(sceneName);
+        transitionAnim.SetTrigger("Start");
     }
 }

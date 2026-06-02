@@ -1,0 +1,154 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!244 &-5519633762337039528
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 92de50a9eb525ca43a794cc6356144b4
+  m_EffectName: Attenuation
+  m_MixLevel: 8c4ee96b253fd3d47b0ac83f49497d58
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &-2535554290671354424
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 8bae2effc31a60849880c3164fc854a2
+  m_EffectName: Attenuation
+  m_MixLevel: 9065c184de4bf0941b36855cabea9a07
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!241 &24100000
+AudioMixerController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MainMixer
+  m_OutputGroup: {fileID: 0}
+  m_MasterGroup: {fileID: 24300002}
+  m_Snapshots:
+  - {fileID: 24500006}
+  - {fileID: 912452806178604412}
+  m_StartSnapshot: {fileID: 24500006}
+  m_SuspendThreshold: -80
+  m_EnableSuspend: 1
+  m_UpdateMode: 0
+  m_ExposedParameters: []
+  m_AudioMixerGroupViews:
+  - guids:
+    - 50eab5d173d985443b1fbec357f565b1
+    - 8285fb4332e2870409cdd4269b1fa916
+    - 2fec8bf0ba0b0374493d370fb230bb0b
+    name: View
+  m_CurrentViewIndex: 0
+  m_TargetSnapshot: {fileID: 24500006}
+--- !u!243 &24300002
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Master
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 50eab5d173d985443b1fbec357f565b1
+  m_Children:
+  - {fileID: 2277485539138891752}
+  m_Volume: 22f105719ff19274881e79406e51b7c7
+  m_Pitch: 8a815086d13b5e84383bdf87f8eed9cf
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 24400004}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &24400004
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: da96efdf784f7124eac1538116d3c92b
+  m_EffectName: Attenuation
+  m_MixLevel: fdc3295fdfe67054595dbac3059a7888
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!245 &24500006
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Outside
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 94c27b468be15b749ac3439b01cabde4
+  m_FloatValues:
+    aa22bcf3ddd74dc478984edbd017cbd1: -80
+  m_TransitionOverrides: {}
+--- !u!245 &912452806178604412
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: InTavern
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 5f2f9b0aa653cea468c94b4874c366bc
+  m_FloatValues:
+    aa22bcf3ddd74dc478984edbd017cbd1: 20
+    cd1c20a6998502b4d856a991b03c9ac8: 1
+    992fc3c6431f80e4ebe472724b1d1349: -40.290283
+  m_TransitionOverrides: {}
+--- !u!243 &2277485539138891752
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Global Sound
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 8285fb4332e2870409cdd4269b1fa916
+  m_Children:
+  - {fileID: 2627944593967425791}
+  m_Volume: 992fc3c6431f80e4ebe472724b1d1349
+  m_Pitch: a549066fce08421468e387d924f05d72
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -5519633762337039528}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &2627944593967425791
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Tavern Sound
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 2fec8bf0ba0b0374493d370fb230bb0b
+  m_Children: []
+  m_Volume: aa22bcf3ddd74dc478984edbd017cbd1
+  m_Pitch: cd1c20a6998502b4d856a991b03c9ac8
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -2535554290671354424}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0

@@ -4,20 +4,35 @@ using UnityEngine.Tilemaps;
 public class RoofFade : MonoBehaviour
 {
     [SerializeField] private Tilemap roof;
+    public bool isPlayerUpstairs = false;
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        //Debug.Log("Trigger hit: " + other.gameObject.name);
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !isPlayerUpstairs)
         {
-            //Debug.Log("Player intrat - fade roof");
+            roof.color = new Color(1, 1, 1, 0.3f);
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && !isPlayerUpstairs)
+        {
             roof.color = new Color(1, 1, 1, 0.3f);
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
+        // Cand iese complet din zona, redevine opac
         if (other.CompareTag("Player"))
-            roof.color = new Color(1, 1, 1, 1f);
+        {
+            ForceOpaque();
+        }
+    }
+
+    public void ForceOpaque()
+    {
+        roof.color = new Color(1, 1, 1, 1f);
     }
 }

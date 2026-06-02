@@ -12,6 +12,7 @@ public class Chest : MonoBehaviour
     [SerializeField] private GameObject interactPrompt; // un TextMeshPro GameObject
     private bool _isOpen = false;
     private bool _playerNearby = false;
+    public AudioSource sunetDeschidere;
 
     void Start()
     {
@@ -22,6 +23,10 @@ public class Chest : MonoBehaviour
     void OpenChest()
     {
         _isOpen = true;
+        if (sunetDeschidere != null)
+        {
+            sunetDeschidere.Play();
+        }
         rendererBottom.sprite = openSpriteBottom;
         rendererTop.sprite = openSpriteTop;
         Debug.Log("Chest deschis!");
