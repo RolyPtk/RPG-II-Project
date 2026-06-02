@@ -6,7 +6,7 @@ public class Enemy : Entity
     [Header("Attack")]
     public int attackDamage = 20;
     public float attackCooldown = 1f;
-    public float attackRadius = 4.5f;
+    public float attackRadius = 4.5f; // >= 1.2 please
 
     private float lastAttackTime;
     private Transform player;
@@ -52,6 +52,9 @@ public class Enemy : Entity
     protected override void Die()
     {
         enemyAnimation.Die(); // added by Ionut
+
+        GetComponent<Slime>()?.OnDeath();
+
         Destroy(gameObject);
     }
 
