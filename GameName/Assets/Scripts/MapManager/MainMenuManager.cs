@@ -8,17 +8,15 @@ public class MainMenuManager : MonoBehaviour
     {
         //PlayerPrefs.DeleteKey("UltimulNivelSalvat");
 
+        DatabaseManager.Instance.DeleteSave();
+
         SceneManager.LoadScene(primaScena);
     }
 
-    public void ApasaContinue()
+    public void ApasaLoadGame()
     {
-        //string scenaSalvata = PlayerPrefs.GetString("UltimulNivelSalvat", primaScena);
-
-        //SceneManager.LoadScene(scenaSalvata);
-
         GameStateData gameState =
-        DatabaseManager.Instance.LoadGameState();
+       DatabaseManager.Instance.LoadGameState();
 
         if (gameState == null)
         {
@@ -34,11 +32,6 @@ public class MainMenuManager : MonoBehaviour
         SceneManager.LoadScene(
             gameState.SceneName
         );
-    }
-
-    public void ApasaLoadGame()
-    {
-        Debug.Log("Aici vom deschide panoul cu mai multe salvari!");
     }
 
     public void ApasaQuit()

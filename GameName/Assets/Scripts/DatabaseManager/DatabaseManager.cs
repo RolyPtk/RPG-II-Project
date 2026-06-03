@@ -222,4 +222,25 @@ public class DatabaseManager : MonoBehaviour
 
         return gameState;
     }
+
+    public void DeleteSave()
+    {
+        using (IDbConnection dbConnection = new SqliteConnection(dbPath))
+        {
+            dbConnection.Open();
+
+            using (IDbCommand cmd = dbConnection.CreateCommand())
+            {
+                cmd.CommandText = "DELETE FROM Player;";
+                cmd.ExecuteNonQuery();
+
+                cmd.CommandText = "DELETE FROM GameState;";
+                cmd.ExecuteNonQuery();
+            }
+
+            dbConnection.Close();
+        }
+
+        Debug.Log("Save deleted!");
+    }
 }
